@@ -5,7 +5,7 @@ const ejsMate = require('ejs-mate');
 const methodOverride = require('method-override');
 const Campground = require('./models/campground');
 
-mongoose.connect('mongodb://localhost:27017/yelp-camp', {
+mongoose.connect('mongodb://127.0.0.1:27017/yelp-camp', {
   useNewUrlParser: true,
   //useCreateIndex: true, // Should be omitted in mongoose 6 upward
   useUnifiedTopology: true
@@ -57,7 +57,9 @@ app.get('/campgrounds/:id/edit', async (req, res) => {
 
 app.put('/campgrounds/:id', async (req, res) => {
   const { id } = req.params;
-  const campground = await Campground.findByIdAndUpdate(id, { ...req.body.campground });
+  const campground = await Campground.findByIdAndUpdate(id, {
+    ...req.body.campground
+  });
   res.redirect(`/campgrounds/${campground._id}`);
 });
 

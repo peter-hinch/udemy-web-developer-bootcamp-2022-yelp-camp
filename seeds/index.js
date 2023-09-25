@@ -3,7 +3,7 @@ const cities = require('./cities');
 const { places, descriptors } = require('./seedHelpers');
 const Campground = require('./../models/campground');
 
-mongoose.connect('mongodb://localhost:27017/yelp-camp', {
+mongoose.connect('mongodb://127.0.0.1:27017/yelp-camp', {
   useNewUrlParser: true,
   //useCreateIndex: true, // Should be omitted in mongoose 6 upward
   useUnifiedTopology: true
@@ -15,7 +15,7 @@ db.once('open', () => {
   console.log('Database connected');
 });
 
-const sample = array => array[Math.floor(Math.random() * array.length)];
+const sample = (array) => array[Math.floor(Math.random() * array.length)];
 
 const seedDB = async () => {
   await Campground.deleteMany({});
@@ -26,13 +26,14 @@ const seedDB = async () => {
       location: `${cities[random1000].city}, ${cities[random1000].state}`,
       title: `${sample(descriptors)} ${sample(places)}`,
       image: 'https://source.unsplash.com/collection/483251',
-      description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus nisi suscipit odio, unde a ex rem, maxime molestias odit deserunt, impedit nesciunt minus? Perspiciatis qui eius deleniti aliquid ratione. Amet numquam sequi a ipsa consectetur iusto quae beatae expedita corporis autem maiores sit esse est eveniet, qui provident debitis accusantium quod obcaecati possimus quisquam incidunt quidem! Molestiae veritatis doloremque, culpa perspiciatis esse explicabo error soluta amet laborum illo maiores, cupiditate, ullam dolor id facilis commodi labore magni! Repudiandae, perferendis. Repellendus, culpa magnam neque velit totam, reprehenderit inventore placeat, minima illum iure aliquam odit earum maiores expedita aliquid repellat autem. Soluta!',
+      description:
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus nisi suscipit odio, unde a ex rem, maxime molestias odit deserunt, impedit nesciunt minus? Perspiciatis qui eius deleniti aliquid ratione. Amet numquam sequi a ipsa consectetur iusto quae beatae expedita corporis autem maiores sit esse est eveniet, qui provident debitis accusantium quod obcaecati possimus quisquam incidunt quidem! Molestiae veritatis doloremque, culpa perspiciatis esse explicabo error soluta amet laborum illo maiores, cupiditate, ullam dolor id facilis commodi labore magni! Repudiandae, perferendis. Repellendus, culpa magnam neque velit totam, reprehenderit inventore placeat, minima illum iure aliquam odit earum maiores expedita aliquid repellat autem. Soluta!',
       price
     });
     await camp.save();
   }
-}
+};
 
-seedDB().then( () => {
+seedDB().then(() => {
   mongoose.connection.close();
 });
